@@ -11,11 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
 
-    <!-- Leaflet.js CSS for Peta Etnografis (Self-Hosted for Security) -->
-    <link rel="stylesheet" href="{{ asset('lib/leaflet/leaflet.css') }}">
-
-    <!-- Main Archival Stylesheet (Coklat Kayu & Putih Gading + SuisseIntl Font) -->
-    <link rel="stylesheet" href="{{ asset('css/archive.css') }}">
+    <!-- Main Archival Stylesheet (Includes Bundled Leaflet 1.9.4 + Coklat Kayu & Putih Gading) -->
+    <link rel="stylesheet" href="{{ asset('css/archive.css') }}?v=20261116-3">
 </head>
 <body>
     <!-- Custom Cursor (seunghyuk.com interactive micro-interaction) -->
@@ -773,10 +770,7 @@
         };
     </script>
 
-    <!-- Leaflet.js Script (Self-Hosted for Security) -->
-    <script src="{{ asset('lib/leaflet/leaflet.js') }}"></script>
-
-    <!-- Main Archival Interactive Engine -->
-    <script src="{{ asset('js/archive.js') }}"></script>
+    <!-- Main Archival Interactive Engine (Includes Bundled Leaflet 1.9.4) -->
+    <script src="{{ asset('js/archive.js') }}?v=20261116-3"></script>
 </body>
 </html>

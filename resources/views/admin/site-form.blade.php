@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('lib/leaflet/leaflet.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/leaflet.css') }}?v=20261116-3">
     <link rel="stylesheet" href="{{ asset('css/archive.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
@@ -350,7 +350,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('lib/leaflet/leaflet.js') }}"></script>
+    <script src="{{ asset('js/leaflet.js') }}?v=20261116-3"></script>
     <script>
         (function () {
             var catSelect = document.getElementById('categorySelect');
