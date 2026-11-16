@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
 
-    <!-- Main Archival Stylesheet (Includes Bundled Leaflet 1.9.4 + Coklat Kayu & Putih Gading) -->
-    <link rel="stylesheet" href="{{ asset('css/archive.css') }}?v=20261116-3">
+    <!-- Main Archival Stylesheet (Inlined directly from laravel_app/public so public_html separation never serves stale CSS/Leaflet) -->
+    <style>{!! file_get_contents(base_path('public/css/archive.css')) !!}</style>
 </head>
 <body>
     <!-- Custom Cursor (seunghyuk.com interactive micro-interaction) -->
@@ -770,7 +770,7 @@
         };
     </script>
 
-    <!-- Main Archival Interactive Engine (Includes Bundled Leaflet 1.9.4) -->
-    <script src="{{ asset('js/archive.js') }}?v=20261116-3"></script>
+    <!-- Main Archival Interactive Engine (Inlined directly from laravel_app/public so public_html separation never serves stale JS/Leaflet) -->
+    <script>{!! file_get_contents(base_path('public/js/archive.js')) !!}</script>
 </body>
 </html>

@@ -741,10 +741,17 @@ function initEthnographicMap(sites) {
         currentSubCategory = 'all';
         searchQuery = '';
         if (searchInput) searchInput.value = '';
+        document.querySelectorAll('.cat-chip[data-map-category]').forEach((b) => {
+            b.classList.toggle('active', b.getAttribute('data-map-category') === 'all');
+        });
+        document.querySelectorAll('.subcat-quick-btn').forEach((b) => b.classList.remove('active'));
         renderMarkersAndList();
 
         setTimeout(() => {
-            const entry = markerMap[siteId];
+            map.invalidateSize();
+            const entry = markerMap[siteId] || Object.values(markerMap).find(
+                (m) => Number(m.site.id) === Number(siteId) || Number(m.site.marker_number) === Number(siteId)
+            );
             if (entry) {
                 map.flyTo([entry.site.latitude, entry.site.longitude], 16, { duration: 0.8 });
                 entry.marker.openPopup();

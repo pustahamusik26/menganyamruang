@@ -398,6 +398,7 @@ class AdminDashboardController extends Controller
             $file = $request->file('thumbnail_file');
             $filename = Str::slug($validated['site_code']).'-thumb-'.time().'.'.$file->getClientOriginalExtension();
             $file->move($uploadDir, $filename);
+            $this->mirrorUploadToDocumentRoot($filename);
             $thumbnail = '/images/sites/uploads/'.$filename;
             if (!in_array($thumbnail, $existingPhotos, true)) {
                 array_unshift($existingPhotos, $thumbnail);
@@ -408,6 +409,7 @@ class AdminDashboardController extends Controller
             foreach ($request->file('photo_files') as $idx => $photoFile) {
                 $filename = Str::slug($validated['site_code']).'-photo-'.time().'-'.($idx + 1).'.'.$photoFile->getClientOriginalExtension();
                 $photoFile->move($uploadDir, $filename);
+                $this->mirrorUploadToDocumentRoot($filename);
                 $photoUrl = '/images/sites/uploads/'.$filename;
                 $existingPhotos[] = $photoUrl;
             }
@@ -487,6 +489,7 @@ class AdminDashboardController extends Controller
             $file = $request->file('thumbnail_file');
             $filename = Str::slug($validated['code']).'-video-'.time().'.'.$file->getClientOriginalExtension();
             $file->move($uploadDir, $filename);
+            $this->mirrorUploadToDocumentRoot($filename);
             $thumbnail = '/images/sites/uploads/'.$filename;
         }
 
@@ -507,6 +510,23 @@ class AdminDashboardController extends Controller
         ]);
 
         $video->save();
+    }
+
+    protected function mirrorUploadToDocumentRoot(string $filename): void
+    {
+        try {
+            $docRoot = $_SERVER['DOCUMENT_ROOT'] ?? null;
+            $src = public_path('images/sites/uploads/'.$filename);
+            if ($docRoot && is_dir($docRoot) && File::exists($src)) {
+                $dstDir = rtrim($docRoot, '/\\').'/images/sites/uploads';
+                if (realpath($dstDir) !== realpath(dirname($src))) {
+                    File::ensureDirectoryExists($dstDir);
+                    @File::copy($src, $dstDir.'/'.$filename);
+                }
+            }
+        } catch (\Throwable $e) {
+            // Ignore
+        }
     }
 
     protected function syncJsonBackups(): void

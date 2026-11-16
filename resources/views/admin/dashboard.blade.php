@@ -7,8 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/archive.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <style>{!! file_get_contents(base_path('public/css/archive.css')) !!}</style>
+    <style>{!! file_get_contents(base_path('public/css/admin.css')) !!}</style>
 </head>
 <body class="admin-body">
     <div class="admin-shell">

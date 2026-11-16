@@ -10,8 +10,8 @@
         "website": "https://riotamba.com",
         "website_label": "riotamba.com",
         "bio": "Pengusul adalah Dosen Pengelolaan Konvensi dan Acara dengan minat kajian Tata Kelola Seni dan Budaya. Program Dukungan Dana Indonesiana 2025 ini dengan judul Menganyam Ruang dan Warna Ekspresi Kebudayaan Tionghoa dalam Kota Multikultural Medan",
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 2,
@@ -24,8 +24,8 @@
         "website": null,
         "website_label": null,
         "bio": null,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 3,
@@ -38,8 +38,8 @@
         "website": null,
         "website_label": null,
         "bio": null,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 4,
@@ -52,8 +52,8 @@
         "website": null,
         "website_label": null,
         "bio": null,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 5,
@@ -66,8 +66,8 @@
         "website": null,
         "website_label": null,
         "bio": null,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 6,
@@ -80,8 +80,8 @@
         "website": null,
         "website_label": null,
         "bio": null,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 7,
@@ -94,8 +94,8 @@
         "website": null,
         "website_label": null,
         "bio": null,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 8,
@@ -108,8 +108,8 @@
         "website": null,
         "website_label": null,
         "bio": null,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 9,
@@ -122,8 +122,8 @@
         "website": null,
         "website_label": null,
         "bio": null,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 10,
@@ -136,7 +136,7 @@
         "website": null,
         "website_label": null,
         "bio": null,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     }
 ]

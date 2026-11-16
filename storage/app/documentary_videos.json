@@ -12,8 +12,8 @@
         "thumbnail": "/images/sites/tjong_a_fie_mansion.jpg",
         "duration": "04:32",
         "is_active": true,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 2,
@@ -28,8 +28,8 @@
         "thumbnail": "/images/sites/vihara_gunung_timur.jpg",
         "duration": "05:18",
         "is_active": true,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 3,
@@ -44,8 +44,8 @@
         "thumbnail": "/images/sites/masjid_gang_bengkok.jpg",
         "duration": "03:45",
         "is_active": true,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 4,
@@ -60,8 +60,8 @@
         "thumbnail": "/images/sites/kuliner_mie_hokkien.jpg",
         "duration": "06:10",
         "is_active": true,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 5,
@@ -76,8 +76,8 @@
         "thumbnail": "/images/sites/site_024_a.svg",
         "duration": "07:24",
         "is_active": true,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 6,
@@ -92,8 +92,8 @@
         "thumbnail": "/images/sites/tjong_a_fie_interior.jpg",
         "duration": "04:55",
         "is_active": true,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     },
     {
         "id": 7,
@@ -108,7 +108,7 @@
         "thumbnail": "/images/sites/kawasan_kesawan.jpg",
         "duration": "05:40",
         "is_active": true,
-        "created_at": "2026-11-16T16:36:48.000000Z",
-        "updated_at": "2026-11-16T16:36:48.000000Z"
+        "created_at": "2026-11-16T16:50:29.000000Z",
+        "updated_at": "2026-11-16T16:50:29.000000Z"
     }
 ]
