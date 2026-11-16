@@ -1,4 +1,7 @@
 *
 !private/
 !public/
+!cultural_sites.json
+!documentary_videos.json
+!team_members.json
 !.gitignore

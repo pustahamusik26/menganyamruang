@@ -517,10 +517,11 @@ class AdminDashboardController extends Controller
 
         try {
             $sites = CulturalSite::orderBy('marker_number')->get()->makeHidden(['id', 'created_at', 'updated_at'])->toArray();
-            File::put(
-                storage_path('app/cultural_sites.json'),
-                json_encode($sites, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
-            );
+            $sitesJson = json_encode($sites, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+            File::put(storage_path('app/cultural_sites.json'), $sitesJson);
+            if (File::isDirectory(database_path('data'))) {
+                File::put(database_path('data/cultural_sites.json'), $sitesJson);
+            }
 
             $videos = DocumentaryVideo::orderBy('sort_order')->get()->toArray();
             File::put(

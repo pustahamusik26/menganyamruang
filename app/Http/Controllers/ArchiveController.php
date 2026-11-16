@@ -40,8 +40,17 @@ class ArchiveController extends Controller
     protected function getSitesCollection()
     {
         try {
-            if (\Illuminate\Support\Facades\Schema::hasTable('cultural_sites')) {
+            if (!Schema::hasTable('cultural_sites') && !app()->runningUnitTests()) {
+                \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+            }
+
+            if (Schema::hasTable('cultural_sites')) {
                 $dbSites = CulturalSite::orderBy('marker_number')->get();
+                if ($dbSites->isEmpty() && !app()->runningUnitTests()) {
+                    (new \Database\Seeders\CulturalSiteSeeder())->run();
+                    (new \Database\Seeders\AdminAndContentSeeder())->run();
+                    $dbSites = CulturalSite::orderBy('marker_number')->get();
+                }
                 if ($dbSites->isNotEmpty()) {
                     return $dbSites;
                 }
@@ -51,6 +60,10 @@ class ArchiveController extends Controller
         }
 
         $jsonPath = storage_path('app/cultural_sites.json');
+        if (!file_exists($jsonPath)) {
+            $jsonPath = database_path('data/cultural_sites.json');
+        }
+
         if (file_exists($jsonPath)) {
             $raw = json_decode(file_get_contents($jsonPath), true) ?? [];
             return collect($raw)->map(function ($item, $idx) {

@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
 
     <!-- Leaflet.js CSS for Peta Etnografis (Self-Hosted for Security) -->
-    <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
+    <link rel="stylesheet" href="{{ asset('lib/leaflet/leaflet.css') }}">
 
     <!-- Main Archival Stylesheet (Coklat Kayu & Putih Gading + SuisseIntl Font) -->
     <link rel="stylesheet" href="{{ asset('css/archive.css') }}">
@@ -774,7 +774,7 @@
     </script>
 
     <!-- Leaflet.js Script (Self-Hosted for Security) -->
-    <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
+    <script src="{{ asset('lib/leaflet/leaflet.js') }}"></script>
 
     <!-- Main Archival Interactive Engine -->
     <script src="{{ asset('js/archive.js') }}"></script>

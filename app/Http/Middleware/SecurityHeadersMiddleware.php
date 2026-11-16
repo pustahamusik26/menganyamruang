@@ -28,7 +28,7 @@ class SecurityHeadersMiddleware
             . "font-src 'self' https://fonts.gstatic.com data:; "
             . "img-src 'self' data: https: blob:; "
             . "media-src 'self' data: blob:; "
-            . "connect-src 'self' https://*.basemaps.cartocdn.com; "
+            . "connect-src 'self' https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org; "
             . "frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com; "
             . "frame-ancestors 'self'; "
             . "base-uri 'self'; "

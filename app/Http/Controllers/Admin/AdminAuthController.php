@@ -20,6 +20,17 @@ class AdminAuthController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
+        try {
+            if (!app()->runningUnitTests()) {
+                if (!\Illuminate\Support\Facades\Schema::hasColumn('users', 'username') || !User::where('username', 'admin')->exists()) {
+                    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+                    (new \Database\Seeders\AdminAndContentSeeder())->run();
+                }
+            }
+        } catch (\Throwable $e) {
+            // Ignore if DB not ready
+        }
+
         return view('admin.login');
     }
 
