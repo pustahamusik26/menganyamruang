@@ -377,23 +377,11 @@ function initEthnographicMap(sites) {
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-    // Warm archival cartographic tile layer (CartoDB Voyager + OpenStreetMap fallback)
-    const primaryTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-        subdomains: 'abcd',
+    // Warm archival cartographic tile layer (OpenStreetMap — Free without API Key on Production)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
         maxZoom: 19
     }).addTo(map);
-
-    let fallbackLoaded = false;
-    primaryTiles.on('tileerror', () => {
-        if (!fallbackLoaded) {
-            fallbackLoaded = true;
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors',
-                maxZoom: 19
-            }).addTo(map);
-        }
-    });
 
     // Ensure map dimensions recalculate properly on initial load, hash navigation, and viewport visibility
     setTimeout(() => map.invalidateSize(), 200);
