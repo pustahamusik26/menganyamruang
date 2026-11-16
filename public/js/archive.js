@@ -242,16 +242,24 @@ function initSeunghyukCanvas(sites) {
         });
 
         // Position and connect the primary interactive radial nodes
+        const isMobileViewport = width < 768;
         nodeElements.forEach((el, idx) => {
-            const pctX = parseFloat(el.getAttribute('data-x') || '50') / 100;
-            const pctY = parseFloat(el.getAttribute('data-y') || '50') / 100;
+            const rawPctX = parseFloat(el.getAttribute('data-x') || '50') / 100;
+            const rawPctY = parseFloat(el.getAttribute('data-y') || '50') / 100;
+
+            // Keep nodes comfortably inside narrow phone viewports while preserving desktop radial layout
+            const pctX = isMobileViewport ? (0.5 + (rawPctX - 0.5) * 0.72) : rawPctX;
+            const pctY = isMobileViewport ? (0.5 + (rawPctY - 0.5) * 0.84) : rawPctY;
 
             // Parallax offset relative to center displacement
-            const offsetX = (centerX - width / 2) * (0.35 + (idx % 3) * 0.12);
-            const offsetY = (centerY - height / 2) * (0.35 + (idx % 3) * 0.12);
+            const parallaxFactor = isMobileViewport ? 0.15 : (0.35 + (idx % 3) * 0.12);
+            const offsetX = (centerX - width / 2) * parallaxFactor;
+            const offsetY = (centerY - height / 2) * parallaxFactor;
 
-            const nx = width * pctX + offsetX;
-            const ny = height * pctY + offsetY;
+            const padX = isMobileViewport ? Math.min(82, width * 0.23) : 24;
+            const padY = isMobileViewport ? 56 : 24;
+            const nx = Math.max(padX, Math.min(width - padX, width * pctX + offsetX));
+            const ny = Math.max(padY, Math.min(height - padY, height * pctY + offsetY));
 
             el.style.left = `${nx}px`;
             el.style.top = `${ny}px`;

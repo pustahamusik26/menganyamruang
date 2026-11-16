@@ -2100,25 +2100,73 @@ body.cursor-hover .custom-cursor-ring {
     border-top: 3px solid var(--chinese-red);
 }
 
-/* Responsive Adjustments */
+/* ==========================================================================
+   RESPONSIVE LAYOUT: TABLET (<= 1080px) & MOBILE / HANDPHONE (<= 768px, <= 480px)
+   Desktop (> 1080px) remains 100% unchanged.
+   ========================================================================== */
 @media (max-width: 1080px) {
+    .site-header {
+        height: auto;
+        padding: 10px 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .header-left {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .header-right {
+        position: absolute;
+        top: 10px;
+        right: 16px;
+    }
+
+    .topleft-nav-Quick {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-left: 0;
+        border-left: none;
+        padding-top: 8px;
+        padding-bottom: 2px;
+        border-top: 1px solid var(--wood-line);
+        gap: 6px;
+    }
+
+    .topleft-nav-Quick::-webkit-scrollbar {
+        display: none;
+    }
+
+    .hero-seunghyuk {
+        padding-top: 98px;
+    }
+
     .map-workspace-shell {
         grid-template-columns: 1fr;
         height: auto;
     }
+
     .map-canvas-container {
         height: 580px;
     }
+
     .map-right-sidebar {
-        height: 460px;
+        height: 480px;
         border-left: none;
         border-top: 1px solid var(--wood-dark);
     }
+
     .ringkasan-grid,
     .museum-china-spotlight,
     .proposer-spotlight-card {
         grid-template-columns: 1fr;
     }
+
     .ringkasan-meta-col {
         border-right: none;
         border-bottom: 1px solid var(--wood-line);
@@ -2128,21 +2176,382 @@ body.cursor-hover .custom-cursor-ring {
 }
 
 @media (max-width: 768px) {
+    body::before {
+        background-size: 44px 44px;
+    }
+
     .site-header {
+        padding: 8px 12px;
+    }
+
+    .header-right {
+        top: 8px;
+        right: 12px;
+    }
+
+    .brand-title {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+    }
+
+    .brand-domain {
+        font-size: 9.5px;
+    }
+
+    .jingle-controller {
+        padding: 3px 7px;
+        gap: 4px;
+    }
+
+    .sound-toggle-btn {
+        font-size: 10px;
+    }
+
+    .jingle-btn {
+        font-size: 9.5px;
+        padding: 2px 5px;
+    }
+
+    .nav-pill-link {
+        font-size: 10.5px;
+        padding: 5px 9px;
+    }
+
+    /* Hero Section on Handphone */
+    .hero-seunghyuk {
+        padding-top: 92px;
+        min-height: auto;
+    }
+
+    .hero-canvas-stage {
+        height: 520px;
+        min-height: 480px;
+    }
+
+    .hero-corner {
+        font-size: 9.5px;
+        letter-spacing: 0.05em;
+        line-height: 1.35;
+    }
+
+    .hero-corner.top-left {
+        top: 12px;
+        left: 12px;
+        right: 12px;
+    }
+
+    .hero-corner.bottom-left {
+        bottom: 10px;
+        left: 12px;
+        right: 12px;
+    }
+
+    .hero-corner.top-right,
+    .hero-corner.bottom-right {
+        display: none;
+    }
+
+    .center-anchor-caption {
+        font-size: 8.5px;
+        letter-spacing: 0.08em;
+        padding: 2px 6px;
+        max-width: 78vw;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .radial-node-item {
+        padding: 4px 7px;
+        gap: 5px;
+        max-width: 44vw;
+        background: rgba(250, 246, 238, 0.92);
+        border: 1px solid var(--wood-line);
+    }
+
+    .node-label {
+        font-size: 9.5px;
+        letter-spacing: 0.04em;
+        white-space: normal;
+        line-height: 1.15;
+    }
+
+    .node-count {
+        font-size: 9px;
+    }
+
+    .hero-bottom-bar {
         height: auto;
-        padding: 10px 14px;
-        flex-wrap: wrap;
+        padding: 12px 14px;
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
         gap: 8px;
+        font-size: 10px;
     }
-    .topleft-nav-Quick {
-        overflow-x: auto;
+
+    .scroll-indicator-btn {
+        justify-content: center;
         width: 100%;
-        padding-left: 0;
-        border-left: none;
-        padding-top: 6px;
-        border-top: 1px solid var(--wood-line);
     }
+
+    /* Narrative & Ringkasan Section on Handphone */
+    .narrative-section,
+    .arch-section {
+        padding: 44px 14px;
+    }
+
     .chinese-lattice-frame {
-        padding: 28px 20px;
+        padding: 24px 16px;
+    }
+
+    .kajian-overline {
+        font-size: 10.5px;
+        letter-spacing: 0.08em;
+        line-height: 1.4;
+    }
+
+    .project-main-title {
+        font-size: clamp(23px, 6.2vw, 32px);
+        line-height: 1.16;
+        margin-bottom: 16px;
+    }
+
+    .project-subtitle-lead {
+        font-size: 15px;
+        padding-bottom: 20px;
+        margin-bottom: 22px;
+    }
+
+    .ringkasan-grid {
+        gap: 24px;
+    }
+
+    .ringkasan-prose p {
+        font-size: 14.5px;
+        line-height: 1.68;
+    }
+
+    .support-endorsement-bar {
+        margin-top: 28px;
+        padding-top: 22px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .support-logos-row {
+        gap: 16px;
+    }
+
+    .support-logo-item {
+        height: 36px;
+    }
+
+    .dev-support-small {
+        text-align: left;
+    }
+
+    /* Section Header Bar on Handphone */
+    .section-header-bar {
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        gap: 12px;
+    }
+
+    .section-index-tag {
+        font-size: 10px;
+        letter-spacing: 0.08em;
+    }
+
+    .section-main-heading {
+        font-size: clamp(21px, 5.6vw, 28px);
+    }
+
+    /* 1. Peta Etnografis on Handphone: Stack filter above map and legend below map so map is 100% unobstructed */
+    .map-canvas-container {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .map-topleft-panel {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        max-width: 100%;
+        border: none;
+        border-bottom: 1px solid var(--wood-dark);
+        box-shadow: none;
+        padding: 12px;
+    }
+
+    .map-filter-chips {
+        max-height: 98px;
+    }
+
+    #ethnographicMap {
+        height: 420px;
+        min-height: 420px;
+        width: 100%;
+    }
+
+    .map-bottomleft-legend {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+        max-width: 100%;
+        border: none;
+        border-top: 1px solid var(--wood-dark);
+        box-shadow: none;
+        padding: 10px 12px;
+    }
+
+    .leaflet-popup-content {
+        width: min(255px, 78vw) !important;
+    }
+
+    .map-right-sidebar {
+        height: auto;
+        max-height: 580px;
+    }
+
+    .sidebar-places-list {
+        max-height: 260px;
+    }
+
+    .sidebar-detail-drawer {
+        max-height: none;
+    }
+
+    /* 2. Galeri Digital & 3. Video Dokumenter on Handphone */
+    .aparelho-stage-wrapper {
+        padding: 16px 12px 22px;
+    }
+
+    .aparelho-top-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding-bottom: 14px;
+        margin-bottom: 14px;
+    }
+
+    .gallery-group-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px;
+    }
+
+    .group-tab-btn {
+        font-size: 11px;
+        padding: 6px 11px;
+        white-space: nowrap;
+    }
+
+    .filmstrip-thumb-btn {
+        flex: 0 0 88px;
+    }
+
+    .subphoto-strip {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .subphoto-item {
+        width: 60px;
+    }
+
+    .stage-location-subtitle-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .stage-location-name {
+        font-size: 16.5px;
+        line-height: 1.3;
+    }
+
+    .stage-location-meta {
+        font-size: 10.5px;
+    }
+
+    .museum-china-spotlight {
+        padding: 16px;
+        gap: 16px;
+    }
+
+    /* 4. Profil Tim Kerja on Handphone */
+    .proposer-spotlight-card {
+        padding: 22px 16px;
+        gap: 18px;
+    }
+
+    .proposer-link-btn {
+        width: 100%;
+        justify-content: center;
+        font-size: 11px;
+        padding: 12px 14px;
+        text-align: center;
+    }
+
+    .team-roster-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .team-member-card {
+        padding: 16px 18px;
+    }
+
+    /* 5. Katalog Tabel & Footer on Handphone */
+    #katalog-situs .section-header-bar > div:last-child {
+        width: 100%;
+    }
+
+    #catalogSearchInput,
+    #catalogCategorySelect {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    #katalog-situs table {
+        min-width: 780px;
+    }
+
+    .site-footer {
+        padding: 36px 14px 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand-text-wrap .brand-title {
+        font-size: 10.5px;
+    }
+
+    .sound-bars {
+        display: none;
+    }
+
+    .hero-canvas-stage {
+        height: 460px;
+        min-height: 430px;
+    }
+
+    .radial-node-item {
+        max-width: 46vw;
+        padding: 3px 6px;
+    }
+
+    .node-label {
+        font-size: 8.8px;
+    }
+
+    #ethnographicMap {
+        height: 370px;
+        min-height: 370px;
     }
 }

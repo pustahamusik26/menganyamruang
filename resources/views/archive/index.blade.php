@@ -511,7 +511,7 @@
             </div>
 
             <div class="aparelho-stage-wrapper">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 10px;">
                     <span style="font-family: var(--font-mono); font-size: 11px; color: var(--chinese-gold); letter-spacing: 0.1em;">
                         KLIK BAR VIDEO DI BAWAH INI UNTUK MEMUTAR (01 — 07 VIDEO YOUTUBE):
                     </span>

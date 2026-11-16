@@ -86,7 +86,7 @@
                         @method('PUT')
                     @endif
 
-                    <div style="display: grid; grid-template-columns: 1.55fr 1fr; gap: 24px; align-items: start;">
+                    <div class="site-form-grid">
                         <!-- KOLOM KIRI: DATA UTAMA, LOKASI & NARASI -->
                         <div>
                             <div class="admin-panel">
