@@ -803,7 +803,7 @@
                                 Arsip Anyaman: Kebudayaan Tionghoa Medan
                             </div>
                             <div style="font-family: var(--font-mono); font-size: 11.5px; color: var(--chinese-gold);">
-                                menganyamruang.id • menganyamruang.com
+                                menganyamruang.id
                             </div>
                         </div>
                     </div>
