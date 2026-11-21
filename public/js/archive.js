@@ -63,24 +63,186 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    safeRun(() => initIntroOverlay());
     safeRun(() => initCustomCursor());
-    safeRun(() => initSeunghyukCanvas(DATA.sites || []));
     safeRun(() => initJingleController(DATA.jingles || []));
+    safeRun(() => initSeunghyukCanvas(DATA.sites || []));
     safeRun(() => initEthnographicMap(DATA.sites || []));
     safeRun(() => initDigitalGallery(DATA.sites || []));
     safeRun(() => initVideoPlayer(DATA.videos || []));
     safeRun(() => initCatalogTable(DATA.sites || []));
+    safeRun(() => initPageNavigation(DATA.activeSection || 'beranda'));
+});
 
-    // If loaded via dedicated sub-route (/peta-etnografis, /galeri-digital, /video, /profil-tim), scroll smoothly
-    if (DATA.activeSection && DATA.activeSection !== 'beranda') {
-        const targetEl = document.getElementById(DATA.activeSection);
-        if (targetEl) {
-            setTimeout(() => {
-                targetEl.scrollIntoView({ behavior: 'smooth' });
-            }, 250);
+/* ==========================================================================
+   0. ANIMATED INTRO OVERLAY (Mengayam Ruang — Intro.html)
+   ========================================================================== */
+function initIntroOverlay() {
+    const intro = document.getElementById('introOverlay');
+    const stage = document.getElementById('introSvgStage');
+    const skipBtn = document.getElementById('introSkipBtn');
+    const replayBtn = document.getElementById('introReplayBtn');
+    if (!intro || !stage) return;
+
+    const C = 57.4, X0 = 113, Y0 = 113, GOLD = '#E9B949', CREAM = '#F6E6C9';
+    let timer = null;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function buildTiles() {
+        let out = '';
+        for (let r = 0; r < 5; r++) {
+            for (let c = 0; c < 5; c++) {
+                const horiz = (r + c) % 2 === 0;
+                let x = X0 + c * C;
+                let y = Y0 + r * C;
+                const d = (0.9 + (r + c) * 0.09).toFixed(2) + 's';
+                let dx = 0, dy = 0, w, h;
+                if (horiz) {
+                    x -= 3; y += 2.5; w = C + 6; h = C - 5; dx = (r % 2 ? -1 : 1) * 110;
+                } else {
+                    x += 2.5; y -= 3; w = C - 5; h = C + 6; dy = (c % 2 ? -1 : 1) * 110;
+                }
+                out += `<rect class="tile" style="--dx:${dx}px;--dy:${dy}px;--d:${d}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" fill="${horiz ? GOLD : CREAM}" stroke="#7a1410" stroke-opacity=".35" stroke-width="1.2"/>`;
+            }
+        }
+        return out;
+    }
+
+    function buildSvg() {
+        stage.innerHTML =
+            '<svg viewBox="0 0 512 512" role="img" aria-label="Logo Menganyam Ruang: pin lokasi di atas anyaman">' +
+            '<circle class="disc" cx="256" cy="256" r="256" fill="#8E1A15"/>' +
+            '<circle class="ring" cx="256" cy="256" r="233" fill="none" stroke="#C98A2E" stroke-width="3" transform="rotate(-90 256 256)"/>' +
+            '<defs><clipPath id="weave"><rect x="113" y="113" width="287" height="287"/></clipPath></defs>' +
+            '<g clip-path="url(#weave)">' + buildTiles() + '</g>' +
+            '<ellipse class="land" cx="256" cy="368" rx="70" ry="18" fill="none" stroke="#E9B949" stroke-width="4"/>' +
+            '<g class="pin">' +
+                '<path d="M256 368C230 335 174 272 174 205a82 82 0 1 1 164 0c0 67-56 130-82 163z" fill="#6E0F0C" stroke="#E9B949" stroke-width="9" stroke-linejoin="round"/>' +
+                '<circle class="pulse" cx="256" cy="224" r="38" fill="none" stroke="#E9B949" stroke-width="4"/>' +
+                '<circle cx="256" cy="224" r="38" fill="#E9B949"/>' +
+                '<circle cx="256" cy="224" r="14" fill="#6E0F0C"/>' +
+            '</g></svg>';
+    }
+
+    function finishIntro() {
+        clearTimeout(timer);
+        intro.classList.add('done');
+        if (skipBtn) skipBtn.blur();
+        window.dispatchEvent(new Event('resize'));
+        if (window.invalidateArchiveMap) {
+            setTimeout(() => window.invalidateArchiveMap(), 120);
         }
     }
-});
+
+    function playIntro() {
+        clearTimeout(timer);
+        intro.classList.remove('done');
+        buildSvg();
+        timer = setTimeout(finishIntro, reduce ? 1200 : 5200);
+    }
+
+    skipBtn?.addEventListener('click', finishIntro);
+    replayBtn?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        playIntro();
+    });
+
+    playIntro();
+}
+
+/* ==========================================================================
+   0B. SEPARATE PAGE NAVIGATION ENGINE (DESKTOP PILLS + MOBILE DROPDOWN)
+   ========================================================================== */
+function initPageNavigation(defaultSection) {
+    const validSections = [
+        'beranda',
+        'ringkasan-kajian',
+        'peta-etnografis',
+        'galeri-digital',
+        'video-dokumenter',
+        'profil-tim',
+        'katalog-situs'
+    ];
+
+    const mobileSelect = document.getElementById('mobileNavSelect');
+
+    window.switchArchivePage = (targetId, options = {}) => {
+        const cleanId = String(targetId || '').replace(/^#/, '');
+        const pageId = validSections.includes(cleanId) ? cleanId : 'beranda';
+
+        document.querySelectorAll('.page-view-section').forEach((sec) => {
+            const isTarget = sec.getAttribute('data-page-section') === pageId || sec.id === pageId;
+            sec.classList.toggle('active-page-view', isTarget);
+        });
+
+        // Update desktop navigation pill active states
+        document.querySelectorAll('.topleft-nav-Quick .nav-pill-link').forEach((link) => {
+            const navTarget = link.getAttribute('data-nav-page') || (link.getAttribute('href') || '').replace(/^#/, '');
+            link.classList.toggle('active', navTarget === pageId);
+        });
+
+        // Update quick nav inside Peta Etnografis
+        document.querySelectorAll('.map-Quick-nav a').forEach((link) => {
+            const navTarget = link.getAttribute('data-nav-page') || (link.getAttribute('href') || '').replace(/^#/, '');
+            link.classList.toggle('active', navTarget === pageId);
+        });
+
+        // Sync Mobile Dropdown value
+        if (mobileSelect && mobileSelect.value !== pageId) {
+            mobileSelect.value = pageId;
+        }
+
+        // Update URL hash cleanly without jumping
+        if (!options.skipHistory && history.replaceState) {
+            history.replaceState(null, '', '#' + pageId);
+        }
+
+        window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+
+        // Recalculate Canvas or Map dimensions when switching to their dedicated pages
+        if (pageId === 'beranda') {
+            setTimeout(() => window.dispatchEvent(new Event('resize')), 30);
+        } else if (pageId === 'peta-etnografis' && window.invalidateArchiveMap) {
+            setTimeout(() => window.invalidateArchiveMap(), 50);
+            setTimeout(() => window.invalidateArchiveMap(), 250);
+        }
+
+        // Sync background music track for this page
+        if (window.setJingleForPage) {
+            window.setJingleForPage(pageId);
+        }
+    };
+
+    // Bind clicks on all [data-nav-page] links
+    document.querySelectorAll('[data-nav-page]').forEach((el) => {
+        el.addEventListener('click', (e) => {
+            const targetPage = el.getAttribute('data-nav-page');
+            if (targetPage) {
+                e.preventDefault();
+                window.switchArchivePage(targetPage);
+            }
+        });
+    });
+
+    // Bind Mobile Dropdown change
+    if (mobileSelect) {
+        mobileSelect.addEventListener('change', (e) => {
+            window.switchArchivePage(e.target.value);
+        });
+    }
+
+    // Determine initial page from URL hash or server activeSection
+    const hashPage = (window.location.hash || '').replace(/^#/, '');
+    const initialPage = validSections.includes(hashPage) ? hashPage : (validSections.includes(defaultSection) ? defaultSection : 'beranda');
+    window.switchArchivePage(initialPage, { skipHistory: !hashPage });
+
+    window.addEventListener('hashchange', () => {
+        const h = (window.location.hash || '').replace(/^#/, '');
+        if (validSections.includes(h)) {
+            window.switchArchivePage(h, { skipHistory: true });
+        }
+    });
+}
 
 /* ==========================================================================
    CUSTOM CURSOR FOLLOWER (SEUNGHYUK.COM STYLE)
@@ -130,25 +292,29 @@ function initSeunghyukCanvas(sites) {
     if (!canvas || !stage) return;
     const ctx = canvas.getContext('2d');
 
-    let width = stage.clientWidth;
-    let height = stage.clientHeight;
+    let width = stage.clientWidth || window.innerWidth;
+    let height = stage.clientHeight || 540;
     let dpr = window.devicePixelRatio || 1;
-
-    function resize() {
-        width = stage.clientWidth;
-        height = stage.clientHeight;
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
     let targetX = width / 2;
     let targetY = height / 2;
     let centerX = width / 2;
     let centerY = height / 2;
     let hoveredNodeIdx = -1;
+
+    function resize() {
+        width = stage.clientWidth || window.innerWidth;
+        height = stage.clientHeight || 540;
+        dpr = window.devicePixelRatio || 1;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        targetX = width / 2;
+        targetY = height / 2;
+        centerX = width / 2;
+        centerY = height / 2;
+    }
+    resize();
+    window.addEventListener('resize', resize);
 
     stage.addEventListener('mousemove', (e) => {
         const rect = stage.getBoundingClientRect();
@@ -181,12 +347,14 @@ function initSeunghyukCanvas(sites) {
         el.addEventListener('click', (e) => {
             const filterCat = el.getAttribute('data-filter-category');
             const targetSec = el.getAttribute('data-target-section') || 'peta-etnografis';
+            e.preventDefault();
+            if (window.switchArchivePage) {
+                window.switchArchivePage(targetSec);
+            }
             if (filterCat && window.applyMapCategoryFilter) {
-                e.preventDefault();
-                document.getElementById(targetSec)?.scrollIntoView({ behavior: 'smooth' });
                 setTimeout(() => {
                     window.applyMapCategoryFilter(filterCat);
-                }, 350);
+                }, 120);
             }
         });
     });
@@ -196,7 +364,23 @@ function initSeunghyukCanvas(sites) {
         -2.75, -2.35, -1.85, -1.35, -0.85, -0.35, 0.18, 0.62, 1.15, 1.68, 2.15, 2.65
     ];
 
+    // Mobile 2-column balanced radial slots (4 above center, 4 below center, zero overlap, zero edge clipping)
+    const mobileNodeSlots = [
+        { x: 0.26, y: 0.17 }, // 0: Tempat Ibadah (Top-Left)
+        { x: 0.74, y: 0.20 }, // 1: Kuliner & Gastronomi (Top-Right)
+        { x: 0.26, y: 0.63 }, // 2: Pemakaman & Ritual Cheng Beng (Lower-Left)
+        { x: 0.74, y: 0.37 }, // 3: Perkampungan & Rumah Bersejarah (Upper-Right)
+        { x: 0.26, y: 0.79 }, // 4: Kawasan Kesawan & Bangunan Bersejarah (Bottom-Left)
+        { x: 0.74, y: 0.66 }, // 5: Museum Situs Kota Cina & Perdagangan (Lower-Right)
+        { x: 0.26, y: 0.34 }, // 6: Pendidikan, RS & Perkumpulan Sosial (Upper-Left)
+        { x: 0.74, y: 0.82 }  // 7: Tokoh Sejarah & Filantropis Medan (Bottom-Right)
+    ];
+
     function renderFrame(time) {
+        if (stage.clientWidth && (Math.abs(stage.clientWidth - width) > 2 || Math.abs(stage.clientHeight - height) > 2)) {
+            resize();
+        }
+
         ctx.clearRect(0, 0, width, height);
 
         centerX += (targetX - centerX) * 0.09;
@@ -247,19 +431,19 @@ function initSeunghyukCanvas(sites) {
             const rawPctX = parseFloat(el.getAttribute('data-x') || '50') / 100;
             const rawPctY = parseFloat(el.getAttribute('data-y') || '50') / 100;
 
-            // Keep nodes comfortably inside narrow phone viewports while preserving desktop radial layout
-            const pctX = isMobileViewport ? (0.5 + (rawPctX - 0.5) * 0.72) : rawPctX;
-            const pctY = isMobileViewport ? (0.5 + (rawPctY - 0.5) * 0.84) : rawPctY;
+            const mobSlot = mobileNodeSlots[idx] || { x: rawPctX, y: rawPctY };
+            const pctX = isMobileViewport ? mobSlot.x : rawPctX;
+            const pctY = isMobileViewport ? mobSlot.y : rawPctY;
 
             // Parallax offset relative to center displacement
-            const parallaxFactor = isMobileViewport ? 0.15 : (0.35 + (idx % 3) * 0.12);
+            const parallaxFactor = isMobileViewport ? 0.06 : (0.35 + (idx % 3) * 0.12);
             const offsetX = (centerX - width / 2) * parallaxFactor;
             const offsetY = (centerY - height / 2) * parallaxFactor;
 
-            const padX = isMobileViewport ? Math.min(82, width * 0.23) : 24;
-            const padY = isMobileViewport ? 56 : 24;
-            const nx = Math.max(padX, Math.min(width - padX, width * pctX + offsetX));
-            const ny = Math.max(padY, Math.min(height - padY, height * pctY + offsetY));
+            const elHalfW = ((el.offsetWidth || (isMobileViewport ? 140 : 180)) / 2) + (isMobileViewport ? 8 : 16);
+            const elHalfH = ((el.offsetHeight || 36) / 2) + (isMobileViewport ? 38 : 20);
+            const nx = Math.max(elHalfW, Math.min(width - elHalfW, width * pctX + offsetX));
+            const ny = Math.max(elHalfH, Math.min(height - elHalfH, height * pctY + offsetY));
 
             el.style.left = `${nx}px`;
             el.style.top = `${ny}px`;
@@ -356,6 +540,40 @@ function initJingleController(jingles) {
             });
         });
     });
+
+    // Automatically select the designated music track when switching pages:
+    // - J1 (OPENING PAGE 1.1.wav): Profil Tim Kerja (profil-tim), Data Situs (katalog-situs), Homepage (beranda)
+    // - J2 (MAIN PAGE 1.1 (1).wav): Peta (peta-etnografis), Galeri Digital (galeri-digital), Video (video-dokumenter)
+    // - J3 (CONTENT PAGE 1.1.wav): Ringkasan (ringkasan-kajian) & Peta Etnografis (peta-etnografis)
+    let lastPageId = 'beranda';
+    window.setJingleForPage = (pageId) => {
+        let targetJingleId = 1;
+        if (pageId === 'profil-tim' || pageId === 'katalog-situs' || pageId === 'beranda') {
+            targetJingleId = 1; // OPENING PAGE 1.1.wav
+        } else if (pageId === 'ringkasan-kajian') {
+            targetJingleId = 3; // CONTENT PAGE 1.1.wav
+        } else if (pageId === 'galeri-digital' || pageId === 'video-dokumenter') {
+            targetJingleId = 2; // MAIN PAGE 1.1 (1).wav
+        } else if (pageId === 'peta-etnografis') {
+            // Supports both CONTENT PAGE 1.1.wav (when coming from Ringkasan) and MAIN PAGE 1.1 (1).wav
+            targetJingleId = (lastPageId === 'ringkasan-kajian') ? 3 : 2;
+        }
+        lastPageId = pageId;
+
+        const found = jingles.find((j) => j.id === targetJingleId);
+        if (!found) return;
+
+        if (currentJingle.id !== found.id) {
+            currentJingle = found;
+            audio.src = currentJingle.src;
+            audio.loop = true;
+            if (isPlaying) {
+                audio.play().then(() => updateUI()).catch(() => updateUI());
+            } else {
+                updateUI();
+            }
+        }
+    };
 
     updateUI();
 }
@@ -728,10 +946,13 @@ function initEthnographicMap(sites) {
         renderMarkersAndList();
     };
 
+    window.invalidateArchiveMap = () => {
+        map.invalidateSize();
+    };
+
     window.focusSiteOnMap = (siteId) => {
-        const mapSection = document.getElementById('peta-etnografis');
-        if (mapSection) {
-            mapSection.scrollIntoView({ behavior: 'smooth' });
+        if (window.switchArchivePage) {
+            window.switchArchivePage('peta-etnografis');
         }
         currentCategory = 'all';
         currentSubCategory = 'all';
@@ -753,7 +974,7 @@ function initEthnographicMap(sites) {
                 entry.marker.openPopup();
                 updateActiveInspector(entry.site);
             }
-        }, 350);
+        }, 220);
     };
 
     renderMarkersAndList();

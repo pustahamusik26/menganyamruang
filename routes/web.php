@@ -6,10 +6,12 @@ use App\Http\Controllers\ArchiveController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ArchiveController::class, 'index'])->name('archive.home');
+Route::get('/ringkasan', [ArchiveController::class, 'summary'])->name('archive.summary');
 Route::get('/peta-etnografis', [ArchiveController::class, 'map'])->name('archive.map');
 Route::get('/galeri-digital', [ArchiveController::class, 'gallery'])->name('archive.gallery');
 Route::get('/video', [ArchiveController::class, 'video'])->name('archive.video');
 Route::get('/profil-tim', [ArchiveController::class, 'team'])->name('archive.team');
+Route::get('/data-situs', [ArchiveController::class, 'catalog'])->name('archive.catalog');
 
 Route::prefix('api')->group(function () {
     Route::get('/sites', [ArchiveController::class, 'apiSites'])->name('api.sites');

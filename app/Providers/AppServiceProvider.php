@@ -32,10 +32,26 @@ class AppServiceProvider extends ServiceProvider
                 File::copy($dbDataJson, $storageJson);
             }
 
-            // If Hostinger splits laravel_app/public and public_html, auto-sync updated CSS & JS to DOCUMENT_ROOT
+            // If Hostinger splits laravel_app/public and public_html, auto-sync updated CSS, JS, Logos & Audio to DOCUMENT_ROOT
             $docRoot = $_SERVER['DOCUMENT_ROOT'] ?? null;
             if ($docRoot && is_dir($docRoot) && realpath($docRoot) !== realpath(base_path('public'))) {
-                foreach (['css/archive.css', 'css/admin.css', 'css/leaflet.css', 'js/archive.js', 'js/leaflet.js'] as $rel) {
+                $syncFiles = [
+                    'css/archive.css',
+                    'css/admin.css',
+                    'css/leaflet.css',
+                    'js/archive.js',
+                    'js/leaflet.js',
+                    'favicon.ico',
+                    'images/logos/icon-menganyam-ruang-512.png',
+                    'images/logos/icon-menganyam-ruang-192.png',
+                    'audio/opening-page.wav',
+                    'audio/main-page.wav',
+                    'audio/content-page.wav',
+                    'audio/jingle-1.wav',
+                    'audio/jingle-2.wav',
+                    'audio/jingle-3.wav',
+                ];
+                foreach ($syncFiles as $rel) {
                     $src = base_path('public/' . $rel);
                     $dst = rtrim($docRoot, '/\\') . '/' . $rel;
                     if (File::exists($src) && (!File::exists($dst) || File::size($src) !== File::size($dst))) {

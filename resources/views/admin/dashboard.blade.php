@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin — Arsip Anyaman: Kebudayaan Tionghoa Medan</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logos/icon-menganyam-ruang-512.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,7 +18,7 @@
              =================================================================== -->
         <aside class="admin-sidebar">
             <a href="{{ route('admin.dashboard') }}" class="sidebar-brand">
-                <div class="chinese-seal-box">織</div>
+                <img src="{{ asset('images/logos/icon-menganyam-ruang-512.png') }}" alt="Logo Menganyam Ruang" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; flex-shrink: 0;" />
                 <div>
                     <span class="sidebar-brand-title">Arsip Anyaman</span>
                     <span class="sidebar-brand-sub">PANEL ADMIN // MEDAN</span>

@@ -17,6 +17,11 @@ class ArchiveController extends Controller
         return $this->renderArchive($request, 'beranda');
     }
 
+    public function summary(Request $request): View
+    {
+        return $this->renderArchive($request, 'ringkasan-kajian');
+    }
+
     public function map(Request $request): View
     {
         return $this->renderArchive($request, 'peta-etnografis');
@@ -35,6 +40,11 @@ class ArchiveController extends Controller
     public function team(Request $request): View
     {
         return $this->renderArchive($request, 'profil-tim');
+    }
+
+    public function catalog(Request $request): View
+    {
+        return $this->renderArchive($request, 'katalog-situs');
     }
 
     protected function getSitesCollection()
@@ -203,21 +213,24 @@ class ArchiveController extends Controller
         $jingles = [
             [
                 'id' => 1,
-                'title' => 'Jingle 01 — Harmoni Kesawan',
-                'src' => '/audio/jingle-1.wav',
-                'instrument' => 'GuZheng Pentatonic Loop',
+                'title' => 'OPENING PAGE 1.1 — Profil Tim Kerja & Data Situs',
+                'src' => '/audio/opening-page.wav',
+                'instrument' => 'Opening Page Theme (OPENING PAGE 1.1.wav)',
+                'pages' => ['beranda', 'profil-tim', 'katalog-situs'],
             ],
             [
                 'id' => 2,
-                'title' => 'Jingle 02 — Alunan Selat Panjang',
-                'src' => '/audio/jingle-2.wav',
-                'instrument' => 'Jade Chime & Pentatonic Resonance',
+                'title' => 'MAIN PAGE 1.1 — Peta & Galeri Digital',
+                'src' => '/audio/main-page.wav',
+                'instrument' => 'Main Page Theme (MAIN PAGE 1.1.wav)',
+                'pages' => ['peta-etnografis', 'galeri-digital', 'video-dokumenter'],
             ],
             [
                 'id' => 3,
-                'title' => 'Jingle 03 — Senja Kota Cina',
-                'src' => '/audio/jingle-3.wav',
-                'instrument' => 'Bamboo Flute & Erhu Ambient Loop',
+                'title' => 'CONTENT PAGE 1.1 — Ringkasan & Peta Etnografis',
+                'src' => '/audio/content-page.wav',
+                'instrument' => 'Content Page Theme (CONTENT PAGE 1.1.wav)',
+                'pages' => ['ringkasan-kajian', 'peta-etnografis'],
             ],
         ];
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Administrator — Arsip Anyaman: Kebudayaan Tionghoa Medan</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logos/icon-menganyam-ruang-512.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,7 +16,7 @@
         <div class="login-card">
             <div class="login-card-header">
                 <div class="login-brand-row">
-                    <div class="chinese-seal-box" title="Menganyam Ruang">織</div>
+                    <img src="{{ asset('images/logos/icon-menganyam-ruang-512.png') }}" alt="Logo Menganyam Ruang" style="width: 42px; height: 42px; border-radius: 50%; object-fit: cover; flex-shrink: 0;" />
                     <div>
                         <div class="login-kicker">PANEL MANAJEMEN ARSIP DIGITAL</div>
                         <div class="login-title">Arsip Anyaman // Medan</div>

@@ -5,61 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arsip Anyaman: Kebudayaan Tionghoa Medan — Kajian Objek Pemajuan Kebudayaan dan Cagar Budaya</title>
     <meta name="description" content="Menganyam Ruang mendokumentasikan dan memetakan ekspresi kebudayaan Tionghoa di Kota Medan, mulai dari ritus, seni, tradisi lisan, hingga kuliner, beserta ruang tempat praktek itu hidup.">
+    <link rel="icon" type="image/png" href="{{ asset('images/logos/icon-menganyam-ruang-512.png') }}">
 
-    <!-- Google Fonts Fallback for Monospace & Chinese Serif -->
+    <!-- Google Fonts Fallback for Monospace, Chinese Serif & Intro Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=Young+Serif&display=swap" rel="stylesheet">
 
     <!-- Main Archival Stylesheet (Inlined directly from laravel_app/public so public_html separation never serves stale CSS/Leaflet) -->
     <style>{!! file_get_contents(base_path('public/css/archive.css')) !!}</style>
 </head>
 <body>
+    <!-- =======================================================================
+         ANIMATED INTRO OVERLAY (Mengayam Ruang — Intro.html + Logo Dana Indonesiana)
+         ======================================================================= -->
+    <div class="intro-overlay" id="introOverlay" role="presentation">
+        <button class="intro-skip-btn" id="introSkipBtn" type="button">Lewati &rarr;</button>
+
+        <div class="intro-stage-wrap">
+            <div class="intro-svg-stage" id="introSvgStage"></div>
+            <div class="intro-brand-text">
+                <div class="intro-brand-title">Menganyam Ruang</div>
+                <div class="intro-brand-sub">Arsip Anyaman: Kebudayaan Tionghoa dalam Kota Multikultural Medan</div>
+            </div>
+        </div>
+
+        <div class="intro-bottom-sponsors">
+            <div class="intro-sponsor-caption">
+                DUKUNGAN KEGIATAN OLEH KEMENTERIAN KEBUDAYAAN: DANA INDONESIANA 2025
+            </div>
+            <div class="intro-sponsor-logos">
+                <img src="{{ asset('images/logos/kemenkebud-white.png') }}" alt="Kementerian Kebudayaan" />
+                <img src="{{ asset('images/logos/dana-indonesiana-white.png') }}" alt="Dana Indonesiana" class="intro-dana-logo" />
+                <img src="{{ asset('images/logos/lpdp-color-white.png') }}" alt="LPDP" />
+            </div>
+        </div>
+    </div>
+
     <!-- Custom Cursor (seunghyuk.com interactive micro-interaction) -->
     <div id="cursorDot" class="custom-cursor-dot"></div>
     <div id="cursorRing" class="custom-cursor-ring"></div>
 
     <!-- =======================================================================
-         TOP NAVIGATION BAR (Top-Left Navigation + 3-Jingle Loop BackSound)
+         TOP NAVIGATION BAR (Top-Left Navigation + Mobile Dropdown + 3-Jingle Loop)
          ======================================================================= -->
     <header class="site-header">
         <div class="header-left">
-            <a href="#beranda" class="brand-identity">
-                <div class="chinese-seal" title="Menganyam Ruang — Arsip Anyaman">織</div>
+            <a href="#beranda" data-nav-page="beranda" class="brand-identity">
+                <img src="{{ asset('images/logos/icon-menganyam-ruang-512.png') }}" alt="Logo Menganyam Ruang" class="brand-logo-icon" />
                 <div class="brand-text-wrap">
                     <span class="brand-title">Arsip Anyaman // Medan</span>
                     <span class="brand-domain">menganyamruang.id</span>
                 </div>
             </a>
 
-            <!-- Navigation Sebelah Kiri Atas (PDF Page 2 requirement) -->
+            <!-- Desktop Navigation Pills -->
             <nav class="topleft-nav-Quick" aria-label="Navigasi Utama Sebelah Kiri Atas">
-                <a href="#beranda" class="nav-pill-link {{ $activeSection === 'beranda' ? 'active' : '' }}">
+                <a href="#beranda" data-nav-page="beranda" class="nav-pill-link {{ $activeSection === 'beranda' ? 'active' : '' }}">
                     <span class="nav-num"></span>Homepage
                 </a>
-                <a href="#ringkasan-kajian" class="nav-pill-link">
+                <a href="#ringkasan-kajian" data-nav-page="ringkasan-kajian" class="nav-pill-link {{ $activeSection === 'ringkasan-kajian' ? 'active' : '' }}">
                     <span class="nav-num"></span>Ringkasan
                 </a>
-                <a href="#peta-etnografis" class="nav-pill-link {{ $activeSection === 'peta-etnografis' ? 'active' : '' }}">
+                <a href="#peta-etnografis" data-nav-page="peta-etnografis" class="nav-pill-link {{ $activeSection === 'peta-etnografis' ? 'active' : '' }}">
                     <span class="nav-num"></span>Peta Etnografis
                 </a>
-                <a href="#galeri-digital" class="nav-pill-link {{ $activeSection === 'galeri-digital' ? 'active' : '' }}">
+                <a href="#galeri-digital" data-nav-page="galeri-digital" class="nav-pill-link {{ $activeSection === 'galeri-digital' ? 'active' : '' }}">
                     <span class="nav-num"></span>Galeri Digital
                 </a>
-                <a href="#video-dokumenter" class="nav-pill-link {{ $activeSection === 'video-dokumenter' ? 'active' : '' }}">
+                <a href="#video-dokumenter" data-nav-page="video-dokumenter" class="nav-pill-link {{ $activeSection === 'video-dokumenter' ? 'active' : '' }}">
                     <span class="nav-num"></span>Video
                 </a>
-                <a href="#profil-tim" class="nav-pill-link {{ $activeSection === 'profil-tim' ? 'active' : '' }}">
+                <a href="#profil-tim" data-nav-page="profil-tim" class="nav-pill-link {{ $activeSection === 'profil-tim' ? 'active' : '' }}">
                     <span class="nav-num"></span>Profil Tim Kerja
                 </a>
-                <a href="#katalog-situs" class="nav-pill-link">
+                <a href="#katalog-situs" data-nav-page="katalog-situs" class="nav-pill-link {{ $activeSection === 'katalog-situs' ? 'active' : '' }}">
                     <span class="nav-num"></span>Data Situs ({{ $sites->count() }})
                 </a>
             </nav>
         </div>
 
-        <!-- BackSound: 3 Jingle Loop Controller (PDF Page 5 requirement) -->
+        <!-- Right Header: Mobile Dropdown Navigation + 3-Jingle Loop Controller -->
         <div class="header-right">
+            <div class="mobile-nav-dropdown-wrap">
+                <select id="mobileNavSelect" class="mobile-nav-select" aria-label="Menu Navigasi Halaman">
+                    <option value="beranda" {{ $activeSection === 'beranda' ? 'selected' : '' }}>Menu: Homepage</option>
+                    <option value="ringkasan-kajian" {{ $activeSection === 'ringkasan-kajian' ? 'selected' : '' }}>Menu: Ringkasan</option>
+                    <option value="peta-etnografis" {{ $activeSection === 'peta-etnografis' ? 'selected' : '' }}>Menu: Peta Etnografis</option>
+                    <option value="galeri-digital" {{ $activeSection === 'galeri-digital' ? 'selected' : '' }}>Menu: Galeri Digital</option>
+                    <option value="video-dokumenter" {{ $activeSection === 'video-dokumenter' ? 'selected' : '' }}>Menu: Video</option>
+                    <option value="profil-tim" {{ $activeSection === 'profil-tim' ? 'selected' : '' }}>Menu: Profil Tim Kerja</option>
+                    <option value="katalog-situs" {{ $activeSection === 'katalog-situs' ? 'selected' : '' }}>Menu: Data Situs ({{ $sites->count() }})</option>
+                </select>
+            </div>
+
             <div id="jingleController" class="jingle-controller" title="BackSound: 3 Jingle Loop">
                 <button type="button" id="soundToggleBtn" class="sound-toggle-btn">
                     <span class="sound-bars">
@@ -87,7 +126,7 @@
          HOMEPAGE HERO: SEUNGHYUK.COM INTERACTIVE RADIAL CANVAS
          ("Points, Lines, and Planes" + Nuansa Coklat Kayu & Putih Gading)
          ======================================================================= -->
-    <section id="beranda" class="hero-seunghyuk">
+    <section id="beranda" data-page-section="beranda" class="hero-seunghyuk page-view-section {{ $activeSection === 'beranda' ? 'active-page-view' : '' }}">
         <div id="heroCanvasStage" class="hero-canvas-stage">
             <canvas id="seunghyukCanvas"></canvas>
 
@@ -99,7 +138,7 @@
 
             <div class="hero-corner top-right">
                 <div id="heroLiveCoords">POS // 3.5852° N, 98.6756° E</div>
-                <div id="activeJingleTitle" style="color: var(--chinese-gold); margin-top: 2px;">Jingle 01 — Harmoni Kesawan</div>
+                <div id="activeJingleTitle" style="color: var(--chinese-gold); margin-top: 2px;">OPENING PAGE 1.1 — Profil Tim Kerja &amp; Data Situs</div>
             </div>
 
             <div class="hero-corner bottom-left">
@@ -115,7 +154,7 @@
             <!-- Interactive Radial Nodes Layer (Points, Lines, and Planes) -->
             <div class="radial-nodes-layer">
                 <!-- Center Anchor Square (like seunghyuk.com central point) -->
-                <a href="#ringkasan-kajian" id="radialCenterAnchor" class="radial-center-anchor" title="Klik untuk membaca Ringkasan Kegiatan">
+                <a href="#ringkasan-kajian" data-nav-page="ringkasan-kajian" id="radialCenterAnchor" class="radial-center-anchor" title="Klik untuk membaca Ringkasan Kegiatan">
                     <div class="center-square-node"></div>
                     <span class="center-anchor-caption">MENGANYAM RUANG // MEDAN</span>
                 </a>
@@ -174,9 +213,22 @@
         <!-- Bottom Status Bar -->
         <div class="hero-bottom-bar">
             <span>ARSIP DIGITAL // KOTA MEDAN &amp; DELI SERDANG</span>
-            <a href="#ringkasan-kajian" class="scroll-indicator-btn">
-                EKSPLORASI DOKUMENTASI ↓
-            </a>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px;">
+                <a href="#ringkasan-kajian" data-nav-page="ringkasan-kajian" class="scroll-indicator-btn">
+                    EKSPLORASI DOKUMENTASI &rarr;
+                </a>
+                <a
+                    href="https://www.instagram.com/menganyamruang.id"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="scroll-indicator-btn"
+                    style="border-color: var(--chinese-red); color: var(--chinese-red);"
+                    title="Instagram Resmi @menganyamruang.id"
+                >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    <span>&#64;menganyamruang.id &nearr;</span>
+                </a>
+            </div>
             <span>1. PETA ETNOGRAFIS • 2. GALERI DIGITAL • 3. VIDEO • 4. TIM KERJA</span>
         </div>
     </section>
@@ -184,7 +236,7 @@
     <!-- =======================================================================
          JUDUL PROJECT, SUB JUDUL & RINGKASAN KEGIATAN (EXACT PDF PAGE 1)
          ======================================================================= -->
-    <section id="ringkasan-kajian" class="narrative-section">
+    <section id="ringkasan-kajian" data-page-section="ringkasan-kajian" class="narrative-section page-view-section {{ $activeSection === 'ringkasan-kajian' ? 'active-page-view' : '' }}">
         <div class="container-arch">
             <div class="chinese-lattice-frame">
                 <div class="kajian-overline">
@@ -234,6 +286,19 @@
                                 riotamba.com ↗
                             </a>
                         </div>
+
+                        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--wood-line);">
+                            <div class="meta-label-sm">Instagram Resmi</div>
+                            <a
+                                href="https://www.instagram.com/menganyamruang.id"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style="display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--chinese-red); text-decoration: none; margin-top: 2px;"
+                            >
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                <span>&#64;menganyamruang.id ↗</span>
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Right Prose Column (Exact 3 Paragraphs from PDF Page 1) -->
@@ -278,7 +343,7 @@
          NAVIGATION 1: PETA ETNOGRAFIS (PDF PAGES 2 & 3)
          References: https://thechurchatlas.com/ & https://petraverso.com/
          ======================================================================= -->
-    <section id="peta-etnografis" class="arch-section">
+    <section id="peta-etnografis" data-page-section="peta-etnografis" class="arch-section page-view-section {{ $activeSection === 'peta-etnografis' ? 'active-page-view' : '' }}">
         <div class="container-arch">
             <div class="section-header-bar">
                 <div>
@@ -308,11 +373,11 @@
                                 NAVIGASI &amp; FILTER PETA
                             </span>
                             <div class="map-Quick-nav">
-                                <a href="#beranda">Home</a>
-                                <a href="#peta-etnografis" class="active">1. Peta</a>
-                                <a href="#galeri-digital">2. Galeri</a>
-                                <a href="#video-dokumenter">3. Video</a>
-                                <a href="#profil-tim">4. Tim</a>
+                                <a href="#beranda" data-nav-page="beranda">Home</a>
+                                <a href="#peta-etnografis" data-nav-page="peta-etnografis" class="active">1. Peta</a>
+                                <a href="#galeri-digital" data-nav-page="galeri-digital">2. Galeri</a>
+                                <a href="#video-dokumenter" data-nav-page="video-dokumenter">3. Video</a>
+                                <a href="#profil-tim" data-nav-page="profil-tim">4. Tim</a>
                             </div>
                         </div>
 
@@ -403,7 +468,7 @@
          - No description on stage, only subtitle of location name
          - Includes: Rumah Ibadah, Perkampungan, Titik Makam, Situs, Museum China
          ======================================================================= -->
-    <section id="galeri-digital" class="arch-section">
+    <section id="galeri-digital" data-page-section="galeri-digital" class="arch-section page-view-section {{ $activeSection === 'galeri-digital' ? 'active-page-view' : '' }}">
         <div class="container-arch">
             <div class="section-header-bar">
                 <div>
@@ -498,7 +563,7 @@
           buat dummy video random saja dulu, di klik bar nya akan ada diatas
           pemutaran video, estimasi video yang akan di web sekitar 7 video"
          ======================================================================= -->
-    <section id="video-dokumenter" class="arch-section">
+    <section id="video-dokumenter" data-page-section="video-dokumenter" class="arch-section page-view-section {{ $activeSection === 'video-dokumenter' ? 'active-page-view' : '' }}">
         <div class="container-arch">
             <div class="section-header-bar">
                 <div>
@@ -575,7 +640,7 @@
          - Keterangan lengkap
          - 9 Anggota Tim Kerja (IT Del & Politeknik Wilmar Bisnis Indonesia)
          ======================================================================= -->
-    <section id="profil-tim" class="arch-section">
+    <section id="profil-tim" data-page-section="profil-tim" class="arch-section page-view-section {{ $activeSection === 'profil-tim' ? 'active-page-view' : '' }}">
         <div class="container-arch">
             <div class="section-header-bar">
                 <div>
@@ -601,10 +666,20 @@
                     </p>
                 </div>
 
-                <div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
                     <a href="{{ $team['proposer']['website'] }}" target="_blank" rel="noopener noreferrer" class="proposer-link-btn">
                         <span>KUNJUNGI LANDING PAGE: {{ strtoupper($team['proposer']['website_label']) }}</span>
                         <span>↗</span>
+                    </a>
+                    <a
+                        href="https://www.instagram.com/menganyamruang.id"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="proposer-link-btn"
+                        style="background: transparent; border-color: var(--chinese-gold); color: var(--chinese-gold); justify-content: center;"
+                    >
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        <span>INSTAGRAM: &#64;MENGANYAMRUANG.ID ↗</span>
                     </a>
                 </div>
             </div>
@@ -630,7 +705,7 @@
     <!-- =======================================================================
          NAVIGATION 5: KATALOG DIREKTORI LENGKAP DATA SITUS (EXCEL ACUAN)
          ======================================================================= -->
-    <section id="katalog-situs" class="arch-section" style="background: var(--ivory-surface);">
+    <section id="katalog-situs" data-page-section="katalog-situs" class="arch-section page-view-section {{ $activeSection === 'katalog-situs' ? 'active-page-view' : '' }}" style="background: var(--ivory-surface);">
         <div class="container-arch">
             <div class="section-header-bar">
                 <div>
@@ -722,7 +797,7 @@
             <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 32px; padding-bottom: 32px; border-bottom: 1px solid rgba(250, 246, 238, 0.16);">
                 <div>
                     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-                        <div class="chinese-seal">織</div>
+                        <img src="{{ asset('images/logos/icon-menganyam-ruang-512.png') }}" alt="Logo Menganyam Ruang" class="brand-logo-icon" />
                         <div>
                             <div style="font-size: 16px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">
                                 Arsip Anyaman: Kebudayaan Tionghoa Medan
@@ -732,9 +807,18 @@
                             </div>
                         </div>
                     </div>
-                    <p style="font-size: 13px; color: rgba(250, 246, 238, 0.72); max-width: 540px;">
+                    <p style="font-size: 13px; color: rgba(250, 246, 238, 0.72); max-width: 540px; margin-bottom: 14px;">
                         Kajian Objek Pemajuan Kebudayaan dan Cagar Budaya — Menganyam Ruang dan Warna Ekspresi Kebudayaan Tionghoa dalam Kota Multikultural Medan.
                     </p>
+                    <a
+                        href="https://www.instagram.com/menganyamruang.id"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; background: rgba(250, 246, 238, 0.08); border: 1px solid var(--chinese-gold); color: var(--ivory-bg); text-decoration: none; font-family: var(--font-mono); font-size: 12px; font-weight: 600;"
+                    >
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--chinese-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        <span>Instagram Resmi: <strong style="color: var(--chinese-gold);">&#64;menganyamruang.id</strong> &nearr;</span>
+                    </a>
                 </div>
 
                 <!-- Official White Logos for Dark Wood Footer -->
@@ -748,6 +832,10 @@
             <div style="padding-top: 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; font-size: 11.5px; color: rgba(250, 246, 238, 0.65);">
                 <div>
                     &copy; 2025–2026 Menganyam Ruang — Dukungan Kegiatan oleh Kementerian Kebudayaan: Dana Indonesiana 2025.
+                    <span style="margin: 0 8px; opacity: 0.4;">|</span>
+                    <button type="button" id="introReplayBtn" style="background: none; border: none; color: var(--chinese-gold); font-family: var(--font-mono); font-size: 11px; cursor: pointer; padding: 0;">
+                        PUTAR ULANG INTRO
+                    </button>
                     <span style="margin: 0 8px; opacity: 0.4;">|</span>
                     <a href="{{ auth()->check() ? route('admin.dashboard') : route('admin.login') }}" style="color: var(--chinese-gold); text-decoration: none; font-family: var(--font-mono); font-size: 11px;">
                         {{ auth()->check() ? 'PANEL ADMIN (AKTIF) ↗' : 'LOGIN ADMIN' }}
